@@ -1,6 +1,5 @@
 package daoyunmaihua;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -56,7 +55,7 @@ public class Lexer {
                 break;
         }
         if (cursor.isEnd())
-            throw new ReachEndException(cursor);
+            throw new ReachEndException(cursor.clone());
         StringBuilder word = new StringBuilder();
         String wordStr;
         word.append(c); // 将第一个非空白字符附加到word中
@@ -96,6 +95,8 @@ public class Lexer {
                 cursor.next();
             }
             // 此时已经提取了整个整数字符串word
+            if (!cursor.isEnd() && Character.isLetter(c))
+                throw new IlegalIntegerOrIdLexException(cursor.clone());
             wordStr = word.toString();
             result = new LexicalAnalysisResult(
                     WordType.Integer,
@@ -193,7 +194,7 @@ public class Lexer {
         } else {
             SourceCode.Cursor errorCursor = cursor.clone();
             errorCursor.prev(); // 指针回退1步指向非法字符
-            throw new IllegalCharacterLexException(errorCursor,c);
+            throw new IlegalCharacterLexException(errorCursor,c);
         }
         return result;
     }
@@ -218,7 +219,8 @@ public class Lexer {
                 "do",
                 "call",
                 "read",
-                "write"
+                "write",
+                "odd"
         };
         WordType []basicIdsWordTypes = {
                 WordType.Program,
@@ -234,7 +236,8 @@ public class Lexer {
                 WordType.Do,
                 WordType.Call,
                 WordType.Read,
-                WordType.Write
+                WordType.Write,
+                WordType.Odd
         };
         assert(basicIdsNames.length == basicIdsWordTypes.length);
         basicIdsCount = basicIdsNames.length;

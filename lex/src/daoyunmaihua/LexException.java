@@ -37,8 +37,15 @@ class AssignLexException extends LexException {
     }
 }
 
-class IllegalCharacterLexException extends LexException {
-    public IllegalCharacterLexException(SourceCode.Cursor cursor,char c) {
+class IlegalCharacterLexException extends LexException {
+    public IlegalCharacterLexException(SourceCode.Cursor cursor, char c) {
         super("含有非法字符错误：代码中含有PL/0语言未定义的字符'"+c+"'",cursor);
+    }
+}
+
+class IlegalIntegerOrIdLexException extends LexException {
+
+    public IlegalIntegerOrIdLexException(SourceCode.Cursor cursor) {
+        super("非法整数或者非法标识符：整数后面跟着字母。如果想表示一个整数，后面不可跟着字母；如果想表示一个标识符，则不可以用数字作为开头。",cursor);
     }
 }
