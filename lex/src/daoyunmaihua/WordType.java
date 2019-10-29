@@ -64,4 +64,11 @@ public enum WordType {
     public String toString() {
         return '$'+super.toString();
     }
+
+    public static WordType getWordType(String s) {
+        for (WordType i : WordType.values())
+            if (s == i.toString())
+                return i;
+        throw new IllegalArgumentException("没有"+s+"的WordType");
+    }
 }
