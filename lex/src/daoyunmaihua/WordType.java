@@ -47,7 +47,8 @@ public enum WordType {
 //    Const           (32),
 //    VarId           (33);
     Id              (34),
-    Integer         (35);
+    Integer         (35),
+    Odd             (36);
 
     private int code;
 
