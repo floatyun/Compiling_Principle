@@ -96,7 +96,7 @@ public class Lexer {
             }
             // 此时已经提取了整个整数字符串word
             if (!cursor.isEnd() && Character.isLetter(c))
-                throw new IlegalIntegerOrIdLexException(cursor.clone());
+                throw new IllegalIntegerOrIdLexException(cursor.clone());
             wordStr = word.toString();
             result = new LexicalAnalysisResult(
                     WordType.Integer,
@@ -194,7 +194,7 @@ public class Lexer {
         } else {
             SourceCode.Cursor errorCursor = cursor.clone();
             errorCursor.prev(); // 指针回退1步指向非法字符
-            throw new IlegalCharacterLexException(errorCursor,c);
+            throw new IllegalCharacterLexException(errorCursor,c);
         }
         return result;
     }
